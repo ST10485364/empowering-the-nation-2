@@ -430,3 +430,68 @@ calc- <!doctype html>
   <script src="common.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // --- Calculation Page Logic (with VAT) ---
+  const VAT_RATE = 0.15;
+
+  const calcCourse = document.getElementById("calcCourse");
+  const calcStudents = document.getElementById("calcStudents");
+  const calcTotalBtn = document.getElementById("calcTotalBtn");
+  const calcOutput = document.getElementById("calcOutput");
+
+  if (calcCourse && calcTotalBtn) {
+    // Populate dropdown
+    COURSES.forEach((c) => {
+      calcCourse.insertAdjacentHTML("beforeend", `<option value="${c.id}">${c.name} — ${formatZAR(c.price)}</option>`);
+    });
+
+    calcTotalBtn.addEventListener("click", () => {
+      const selectedId = calcCourse.value;
+      const course = COURSES.find((c) => c.id === selectedId);
+      const students = Number(calcStudents.value) || 1;
+
+      const subtotal = students * course.price;
+      const vat = subtotal * VAT_RATE;
+      const total = subtotal + vat;
+
+      calcOutput.innerHTML = `
+        <div>Subtotal (${students} x ${formatZAR(course.price)}): <strong>${formatZAR(subtotal)}</strong></div>
+        <div>VAT (15%): <strong>${formatZAR(vat)}</strong></div>
+        <hr style="margin:10px 0;">
+        <div>Total (incl. VAT): <strong style="color:var(--accent)">${formatZAR(total)}</strong></div>
+      `;
+    });
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  idnx,courses,contact        <a href="calculation.html">Calculator</a>
+
+
